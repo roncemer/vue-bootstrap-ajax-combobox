@@ -30,31 +30,6 @@ SOFTWARE.
 Vue.component(
     'ajax-combobox',
     {
-        // Supported properties:
-        //     v-model: The model attribute in the parent which will receive the selected Id.  Required.
-        //     options: An object containing the options for the component.  Required.
-        // Supported options:
-        //     debug: Boolean, true to turn on a bunch of debugging output in the HTML template; false to
-        //             turn debugging off.  Optional.  Defaults to false.
-        //     ajax_url: The URL to the AJAX autocomplete.  See below.  Required.
-        //     id_type: The type for the unique-identifying value (primary key) for the data being queried.
-        //             Must be either 'number' or 'string'.  If not specified, this defaults to the initial
-        //             type of the v-model for this component.  Optional.
-        //     alt_id_type: The type for an alternate, unique-identifying value which can be entered directly
-        //             into the search box to locate a specific record.  For example, for US states, this
-        //             could be the two-letter state abbreviation; for countries, it could be the two- or
-        //             three-letter country code; for inventory items, it could be an item number or a UPC
-        //             code.  The valid options are an empty string for no alternate identifier, 'string' for
-        //             a string-type alternate identifier, and 'number' for a numeric-type alternate
-        //             identifier.  Optional.  Defaults to empty (no alternate identifier).
-        //     allow_clear: A boolean, true to allow the id value to be cleared (to zero if id_type='number',
-        //             or to an empty string if id_type='string'); false to always require an Id value and
-        //             generate an error message if it happens to be zero or empty.
-        //             Optional.  Defaults to false.
-        //     placeholder_label: A placeholder label to show in the input when the value has been cleared.
-        //             Only used if allow_clear=true.
-        // The backend AJAX autocomplete must work as follows:
-/// TODO: Describe the backend.
         props:['value', 'options'],
 
         template:
