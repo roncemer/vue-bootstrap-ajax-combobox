@@ -1,0 +1,17 @@
+{
+  "name": "vue-bootstrap-ajax-combobox",
+  "version": "1.0.0",
+  "description": "AJAX Combobox autocomplete component for Vue.js 2.x and Bootstrap 4.",
+  "main": "vue-bootstrap-ajax-combobox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "AJAX",
+    "Autocomplete",
+    "Vue.js",
+    "Bootstrap"
+  ],
+  "author": "Ron Cemer",
+  "license": "MIT"
+}

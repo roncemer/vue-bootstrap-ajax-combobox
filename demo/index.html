@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Demo for AJAX Combobox Component for Vue.js 2.x and Bootstrap 4</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="index.css"/>
+ </head>
+ <body>
+
+  <div id="ajax-combobox-demo-app" v-cloak>
+
+   <form onsubmit="return false;">
+
+    <div class="form-group row">
+     <div class="col-sm-2"></div>
+     <div class="col-sm-10">
+
+      <div>ajax_url: {{ajax_combobox_options.ajax_url}}</div>
+      <div>id_type: {{ajax_combobox_options.id_type}}</div>
+      <div>alt_id_type: {{ajax_combobox_options.alt_id_type}}</div>
+      <div>allow_clear: {{ajax_combobox_options.allow_clear}}</div>
+      <div>placeholder_label: {{ajax_combobox_options.placeholder_label}}</div>
+      <div>state_id: {{'\''+state_id+'\' (type='+typeof(state_id)+')'}}</div>
+
+       <div class="btn-group" role="group">
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="state_id = 0">Set state_id to zero</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="state_id = 5">Set state_id to 5</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="state_id = ''">Set state_id to an empty string</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="toggle_id_type()">{{'Switch id_type to '+((ajax_combobox_options.id_type == 'string') ? 'number' : 'string')}}</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="toggle_allow_clear()">{{(ajax_combobox_options.allow_clear ? 'Disable' : 'Enable')+' allow_clear'}}</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="toggle_placeholder_label()">Toggle placeholder_label</button>
+        <button type="button" class="btn btn-sm btn-primary" v-on:click="toggle_debug()">Toggle debug</button>
+       </div>
+
+     </div>
+    </div>
+
+    <div class="form-group row">
+     <label class="col-sm-2 col-form-label">State</label>
+     <div class="col-sm-10">
+      <ajax-combobox v-model="state_id" v-bind:options="ajax_combobox_options"/>
+     </div>
+    </div>
+
+   </form>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+  <script src="../dist/vue-bootstrap-ajax-combobox.js"></script>
+  <script src="index.js"></script>
+ </body>
+</html>
