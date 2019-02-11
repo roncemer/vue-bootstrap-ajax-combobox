@@ -8,7 +8,7 @@
             state_id:0,
             ajax_combobox_options:{
                 debug:false,
-                ajax_url:'/state-autocomplete.php',
+                ajax_url:'state-autocomplete.php',
                 allow_clear:true,
                 id_type:'number',
                 alt_id_type:'string',
