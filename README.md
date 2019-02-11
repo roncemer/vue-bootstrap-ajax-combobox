@@ -31,3 +31,13 @@ The **ajax_url** option points to a backend REST API which you would implement. 
 * **q**: A user-entered search string; passed when we need to search for matching records and return a list of matches.
 * **id**: A primary key indentifier for a single record; passed when we need to look up the label (textual description) and optional alternate Id for a single record.
 * **alt_id**: An alternate identifier (such as a state abbreviation, a country code, or an inventory item number or UPC code) for a single record; passed when we need to look up a record by a user-entered alternate Id; only used when the **alt_id_type** option is enabled.
+
+The backend REST API must always emit the following HTTP response header:
+> Content-Type: application/json
+
+The body of the response must always be JSON-encoded data.
+
+When searching for matches for a user-entered search string, the **q** query string parameter will be passed to the backend REST API.  The API implementation is expected to find matching rows, and return an array of matches.  If **q** is empty, the backend REST API should return the first rows in the list or table, up to the maximum number of results the backend REST API is able to return.  A good maximum is somewhere between 10 and 20 rows, since all returned rows will be displayed in a drop-down list below the combobox component.  Each row in the returned array must be an object with the following attributes:
+* **id**: The primary key/unique identifier value for the row.
+* **label**: The human-readable label/description which will be displayed in the combobox if the row is selected.
+* **alt_id**: The optional alternate identifier for the row; only used when the **alt_id_type** option is enabled.
