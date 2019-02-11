@@ -3,6 +3,10 @@ AJAX Combobox autocomplete component for Vue.js 2.x and Bootstrap 4.
 
 This component is designed and optimized around searching database tables and enabling user-friendly foreign key linkage between rows in a web-based, database-driven application.
 
+Author: Ronald B. Cemer
+License: MIT
+My GitHub URL: https://github.com/roncemer
+
 # Installing
 
 npm install vue-bootstrap-ajax-combobox
@@ -50,13 +54,13 @@ When searching for matches for a user-entered search string, the **q** query str
 
 # Demo Page
 
-For convenience, a demo app is included under the **demo** directory.  You need a webserver which is capable of running PHP scripts.  To see it in action, install this package somewhere under the document root of your web server, then point your browser to the **demo** directory (specfically, **demo/index.html**).  There are buttons for changing the various options, so you can get a better idea of how this component works.  The demo page searches a list of US states, by state name or abbreviation.  If the user enters a two-letter state abbreviation into the search box and either presses the **Enter** key, tabs out of the component, or otherwise causes the component to lose focus, it will try to look up the state abbreviation (the alternate id), and if it finds a match, will display the state name.
+For convenience, a demo page is included under the **demo** directory.  You need a webserver which is capable of running PHP scripts.  To see it in action, install this package somewhere under the document root of your web server, then point your browser to the **demo** directory (specfically, **demo/index.html**).  There are buttons for changing the various options, so you can get a better idea of how this component works.  The demo page searches a list of US states, by state name or abbreviation.  If the user enters a two-letter state abbreviation into the search box and either presses the **Enter** key, tabs out of the component, or otherwise causes the component to lose focus, it will try to look up the state abbreviation (the alternate id), and if it finds a match, will display the state name.
 
 # Demo Backend REST API
 
-The backend REST API is in **demo/state-autocomplete.php**.  This can be used as a starting point for writing your own REST API in order to use this component for searching database tables, or whatever source of list-based data you have which needs to be searched.  Let's have a look.
+The backend REST API for the demo page is in **demo/state-autocomplete.php**.  This can be used as a starting point for writing your own REST API in order to use this component for searching database tables, or whatever source of list-based data you have which needs to be searched.  Let's have a look.
 
-## List of states
+## List of US States
 
 The backend REST API script starts by listing out the US states, their two-letter abbreviations, and an auto-incrementing numeric Id for each state.
 ```php
