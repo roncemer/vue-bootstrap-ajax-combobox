@@ -26,8 +26,8 @@ The options attribute must be a JavaScript object.  If it is dynamically bound u
 The ```<ajax-combobox>``` element must be inside a Vue.js application or component element which has a Vue instance attached to it.
 
 # Supported properties:
-* *v-model*: The model attribute in the parent which will receive the selected Id.  Required.
-* *options*: A JavaScript object containing the options which controls how the component operates, and how it interacts with your backend REST API.  Required.
+* **v-model**: The model attribute in the parent which will receive the selected Id.  Required.
+* **options**: A JavaScript object containing the options which controls how the component operates, and how it interacts with your backend REST API.  Required.
 
 # Supported options:
 * **debug**: Boolean, true to turn on a bunch of debugging output in the HTML template; false to turn debugging off.  Optional.  Defaults to false.
@@ -49,14 +49,18 @@ The backend REST API must always emit the following HTTP response header:
 
 The body of the response must always be JSON-encoded data.
 
-When searching for matches for a user-entered search string, the **q** query string parameter will be passed to the backend REST API.  The API implementation is expected to find matching rows, and return an object containing an array of matches.  If **q** is empty, the backend REST API should return the first rows in the list or table, up to the maximum number of results the backend REST API is able to return.  A good maximum is somewhere between 10 and 20 rows, since all returned rows will be displayed in a drop-down list below the combobox component.  Each row in the returned array of matches must be an object with the following attributes:
+When searching for matches for a user-entered search string, the **q** query string parameter will be passed to the backend REST API.  The API implementation is expected to find matching rows, and return an object with an attribute named **matches** which contains an array of matches.  If **q** is empty, the backend REST API should return the first rows in the list or table, up to the maximum number of results the backend REST API is able to return.  A good maximum is somewhere between 10 and 20 rows, since all returned rows will be displayed in a drop-down list below the combobox component.  Each row in the returned array of matches must be an object with the following attributes:
 * **id**: The primary key/unique identifier value for the row.
 * **label**: The human-readable label/description which will be displayed in the combobox if the row is selected.
 * **alt_id**: The optional alternate identifier for the row; only used when the **alt_id_type** option is enabled.
 
+When searching for a single row by its primary key/unique identifier, the **id** query string parameter will be passed to the backend REST API.  The API script should attempt to find the matching row by its primary key/unique identifier, and return a single object with **id**, **label**, and optional **alt_id** attributes.  If the row with the specified primary key/unique identifier was not found, the **id** should be set to the placeholder Id (0 if the **id_type** option is "number", or an empty string if the **id_type** option is "string"), the **label** should be set to a human-readable "not found" message, and the optional **alt_id** should be set to the placeholder alternate id (0 if the **alt_id_type** option is "number", or an empty string if the **alt_id_type** option is "string").
+
+When searching for a single row by its primary alternate identifier (which requires the **alt_id_type** option to be set to either "string" or "number"), the **alt_id** query string parameter will be passed to the backend REST API.  The API script should attempt to find the matching row by its alternate identifier, and return a single object with **id**, **label**, and optional **alt_id** attributes.  If the row with the specified alternate identifier was not found, the **id** should be set to the placeholder Id (0 if the **id_type** option is "number", or an empty string if the **id_type** option is "string"), the **label** should be set to a human-readable "not found" message, and the **alt_id** should be set to the placeholder alternate id (0 if the **alt_id_type** option is "number", or an empty string if the **alt_id_type** option is "string").
+
 # Demo Page
 
-For convenience, a demo page is included under the **demo** directory.  You need a webserver which is capable of running PHP scripts.  To see it in action, install this package somewhere under the document root of your web server, then point your browser to the **demo** directory (specfically, **demo/index.html**).  There are buttons for changing the various options, so you can get a better idea of how this component works.  The demo page searches a list of US states, by state name or abbreviation.  If the user enters a two-letter state abbreviation into the search box and either presses the **Enter** key, tabs out of the component, or otherwise causes the component to lose focus, it will try to look up the state abbreviation (the alternate id), and if it finds a match, will display the state name.
+For convenience, a demo page is included under the **demo** directory.  You need a webserver which is capable of running PHP scripts.  To see it in action, install this package somewhere under the document root of your web server, then point your browser to the **demo** directory (specfically, **demo/index.html**).  There are buttons for changing the various options, so you can get a better idea of how this component works.  The demo page searches a list of US states, by state name or abbreviation.  For the primary key, an auto-incrementing number is used for each state, starting with 1.  For the alternate identifier, the two-character state abbreviation is used.  If the user enters a two-letter state abbreviation into the search box and either presses the **Enter** key, tabs out of the component, or otherwise causes the component to lose focus, it will try to look up the state abbreviation (the alternate id), and if it finds a match, will display the state name.
 
 # Demo Backend REST API
 
