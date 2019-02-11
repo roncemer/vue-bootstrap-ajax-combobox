@@ -23,7 +23,7 @@ npm install vue-bootstrap-ajax-combobox
 ```
 The options attribute must be a JavaScript object.  If it is dynamically bound using v-bind, options can be changed externally and the behavior of the combobox will be adjusted accordingly.
 
-The ```html <ajax-combobox>``` element must be inside a Vue.js application or component element which has a Vue instance attached to it.
+The ```<ajax-combobox>``` element must be inside a Vue.js application or component element which has a Vue instance attached to it.
 
 # Supported properties:
 * *v-model*: The model attribute in the parent which will receive the selected Id.  Required.
