@@ -3,9 +3,15 @@ AJAX Combobox autocomplete component for Vue.js 2.x and Bootstrap 4.
 
 This component is designed and optimized around searching database tables and enabling user-friendly foreign key linkage between rows in a web-based, database-driven application.
 
-Author: Ronald B. Cemer
+Requirements:
+* Vue.js 2.x
+* Bootstrap 4.x
+* JQuery 3.x
+* Font Awesome 4.x
 
 License: MIT
+
+Author: Ronald B. Cemer
 
 My GitHub URL: https://github.com/roncemer
 
@@ -31,7 +37,7 @@ The ```<ajax-combobox>``` element must be inside a Vue.js application or compone
 
 # Supported options:
 * **debug**: Boolean, true to turn on a bunch of debugging output in the HTML template; false to turn debugging off.  Optional.  Defaults to false.
-* **ajax_url**: The URL to the AJAX autocomplete.  See below.  Required.
+* **ajax_url**: The URL to the AJAX autocomplete.  This may include additional query string parameters to be passed to the REST API.  See below for a description of how the REST API works.  Required.
 * **id_type**: The type for the unique-identifying value (primary key) for the data being queried.  Must be either 'number' or 'string'.  If not specified, this defaults to the initial type of the v-model for this component.  Optional.
 * **alt_id_type**: The type for an alternate, unique-identifying value which can be entered directly into the search box to locate a specific record.  For example, for US states, this could be the two-letter state abbreviation; for countries, it could be the two- or three-letter country code; for inventory items, it could be an item number or a UPC code.  The valid options are an empty string for no alternate identifier, 'string' for a string-type alternate identifier, and 'number' for a numeric-type alternate identifier.  Optional.  Defaults to empty (no alternate identifier).
 * **allow_clear**: A boolean, true to allow the id value to be cleared (to zero if id_type='number', or to an empty string if id_type='string'); false to always require an Id value and generate an error message if it happens to be zero or empty.  Optional.  Defaults to false.
