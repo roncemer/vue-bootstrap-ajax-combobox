@@ -4,7 +4,9 @@ AJAX Combobox autocomplete component for Vue.js 2.x and Bootstrap 4.
 This component is designed and optimized around searching database tables and enabling user-friendly foreign key linkage between rows in a web-based, database-driven application.
 
 Author: Ronald B. Cemer
+
 License: MIT
+
 My GitHub URL: https://github.com/roncemer
 
 # Installing
