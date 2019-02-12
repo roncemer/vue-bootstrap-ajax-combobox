@@ -221,9 +221,10 @@ Vue.component(
                 if ((!this.inSearchMode) && (evt.charCode >= 0x20) && (!evt.shiftKey) && (!evt.ctrlKey) && (!evt.altKey) && (!evt.metaKey)) {
                     evt.stopPropagation();
                     this.inSearchMode = true;
+                    var thisvm = this;
                     setTimeout(
                         function() {
-                            this.search = String.fromCharCode(evt.charCode);
+                            thisvm.search = String.fromCharCode(evt.charCode);
                         },
                         1
                     );
@@ -232,7 +233,7 @@ Vue.component(
 
             clearButtonClicked:function() {
                 this.setIdWithoutTriggeringLookupById(this.placeholder_id);
-                this.label = this.placeholder_label;
+                this.label = this.my_options.placeholder_label;
                 this.search = '';
                 this.clearMatches();
                 this.$refs.search.focus();
