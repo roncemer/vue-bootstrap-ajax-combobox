@@ -13,7 +13,9 @@
                 id_type:'number',
                 alt_id_type:'string',
                 placeholder_label:defaultPlaceholderLabel,
-            }
+            },
+			readonly:false,
+			disabled:false,
         },
 
         methods:{

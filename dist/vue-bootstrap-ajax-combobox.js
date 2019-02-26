@@ -30,12 +30,12 @@ SOFTWARE.
 Vue.component(
     'ajax-combobox',
     {
-        props:['value', 'options'],
+        props:['value', 'options', 'readonly', 'disabled'],
 
         template:
-'<div class="ajax-combobox">'+"\n"+
-' <div class="input-group">'+"\n"+
-'  <input type="text" ref="search" class="ajax-combobox-search-input form-control" v-bind:readonly="!inSearchMode" v-on:focus="searchFocused" v-on:blur="searchBlurred" autocomplete="off" autocorrect="off" autocapitalize="none" v-on:keydown="searchKeyDown" v-on:keypress="searchKeyPress" v-model.trim="search_computed"/>'+"\n"+
+'<div class="ajax-combobox" style="padding:0; border:none;">'+"\n"+
+' <div class="input-group" style="margin:0; padding:0;">'+"\n"+
+'  <input type="text" ref="search" class="ajax-combobox-search-input form-control" v-bind:readonly="my_readonly || (!inSearchMode)" v-bind:disabled="my_disabled" v-on:focus="searchFocused" v-on:blur="searchBlurred" autocomplete="off" autocorrect="off" autocapitalize="none" v-on:keydown="searchKeyDown" v-on:keypress="searchKeyPress" v-model.trim="search_computed" style="margin:0; padding:0;"/>'+"\n"+
 '  <div v-if="my_options.allow_clear && (!isPlaceholderId())" class="ajax-combobox-clear-button-container input-group-append"><button class="ajax-combobox-clear-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="clearButtonClicked()"><i class="fa fa-times-circle-o"></i></button></div>'+"\n"+
 '  <div class="input-group-append ajax-combobox-toggle-button-container"><button class="ajax-combobox-toggle-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="chevronDownClicked()"><i class="fa fa-chevron-down"></i></button></div>'+"\n"+
 ' </div> <!-- .input-group -->'+"\n"+
@@ -58,6 +58,9 @@ Vue.component(
                     allow_clear:null,
                     placeholder_label:null,
                 },
+
+				my_readonly:false,
+				my_disabled:false,
 
                 // Placeholder id and alternate id, derived from id_type and alt_id_type.
                 placeholder_id:null,
@@ -136,10 +139,20 @@ Vue.component(
                 },
                 deep:true,
             },
+
+			readonly:function() {
+				this.updateMyReadonlyFromProp();
+			},
+
+			disabled:function() {
+				this.updateMyDisabledFromProp();
+			},
         },
 
         created:function() {
             this.updateMyOptionsFromParentOptions();
+			this.updateMyReadonlyFromProp();
+			this.updateMyDisabledFromProp();
             this.triggerLookupById();
         },
 
@@ -174,6 +187,8 @@ Vue.component(
             },
 
             searchKeyDown:function(evt) {
+                if (this.my_readonly || this.my_disabled) return;
+
                 if ((!evt.shiftKey) && (!evt.ctrlKey) && (!evt.altKey) && (!evt.metaKey)) {
                     switch (evt.key) {
                     case 'ArrowUp':
@@ -218,6 +233,8 @@ Vue.component(
             },
 
             searchKeyPress:function(evt) {
+                if (this.my_readonly || this.my_disabled) return;
+
                 if ((!this.inSearchMode) && (evt.charCode >= 0x20) && (!evt.shiftKey) && (!evt.ctrlKey) && (!evt.altKey) && (!evt.metaKey)) {
                     evt.stopPropagation();
                     this.inSearchMode = true;
@@ -442,6 +459,22 @@ Vue.component(
 
                 return changed;
             },
+
+			updateMyReadonlyFromProp:function() {
+				this.my_readonly = this.calcReadonlyOrDisabledFromProp('readonly');
+			},
+
+			updateMyDisabledFromProp:function() {
+				this.my_disabled = this.calcReadonlyOrDisabledFromProp('disabled');
+			},
+
+			calcReadonlyOrDisabledFromProp(propname) {
+				switch (typeof(this[propname])) {
+				case 'undefined': return false;
+				case 'boolean': return this[propname];
+				case 'string': return true;
+				}
+			},
 
             buildURL:function(args) {
                 var sep = (this.my_options.ajax_url.indexOf('?') >= 0) ? '&' : '?';
