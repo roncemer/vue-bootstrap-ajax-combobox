@@ -36,8 +36,8 @@ Vue.component(
 '<div class="ajax-combobox" style="padding:0; border:none;">'+"\n"+
 ' <div class="input-group" style="margin:0; padding:0;">'+"\n"+
 '  <input type="text" ref="search" class="ajax-combobox-search-input form-control" v-bind:readonly="my_readonly || (!inSearchMode)" v-bind:disabled="my_disabled" v-on:focus="searchFocused" v-on:blur="searchBlurred" autocomplete="off" autocorrect="off" autocapitalize="none" v-on:keydown="searchKeyDown" v-on:keypress="searchKeyPress" v-model.trim="search_computed" style="margin:0; padding:0;"/>'+"\n"+
-'  <div v-if="my_options.allow_clear && (!isPlaceholderId())" class="ajax-combobox-clear-button-container input-group-append"><button class="ajax-combobox-clear-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="clearButtonClicked()"><i class="fa fa-times-circle-o"></i></button></div>'+"\n"+
-'  <div class="input-group-append ajax-combobox-toggle-button-container"><button class="ajax-combobox-toggle-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="chevronDownClicked()"><i class="fa fa-chevron-down"></i></button></div>'+"\n"+
+'  <div v-if="my_options.allow_clear && (!my_readonly) && (!my_disabled) && (!isPlaceholderId())" class="ajax-combobox-clear-button-container input-group-append"><button class="ajax-combobox-clear-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="clearButtonClicked()"><i class="fa fa-times-circle-o"></i></button></div>'+"\n"+
+'  <div class="input-group-append ajax-combobox-toggle-button-container"><button class="ajax-combobox-toggle-button btn btn-default" tabindex="-1" v-bind:disabled="my_readonly || my_disabled" v-on:click.stop.prevent="chevronDownClicked()"><i class="fa fa-chevron-down"></i></button></div>'+"\n"+
 ' </div> <!-- .input-group -->'+"\n"+
 ' <div v-if="my_options.debug" v-html="printAttrs()"></div>'+"\n"+
 ' <div class="ajax-combobox-dropdown dropdown" v-bind:class="(matches.length > 0) ? \'show\' : \'\'">'+"\n"+
@@ -142,10 +142,17 @@ Vue.component(
 
 			readonly:function() {
 				this.updateMyReadonlyFromProp();
+				if (this.my_readonly) {
+					this.enterIdleState();
+				}
 			},
 
 			disabled:function() {
 				this.updateMyDisabledFromProp();
+				this.enterIdleState();
+				if (this.my_disabled) {
+					this.enterIdleState();
+				}
 			},
         },
 
@@ -249,17 +256,21 @@ Vue.component(
             },
 
             clearButtonClicked:function() {
-                this.setIdWithoutTriggeringLookupById(this.placeholder_id);
-                this.label = this.my_options.placeholder_label;
-                this.search = '';
-                this.clearMatches();
+				if ((!my_readonly) && (!my_disabled)) {
+                	this.setIdWithoutTriggeringLookupById(this.placeholder_id);
+                	this.label = this.my_options.placeholder_label;
+                	this.search = '';
+                	this.clearMatches();
+				}
                 this.$refs.search.focus();
             },
 
             chevronDownClicked:function() {
                 if ((!this.inSearchMode) || (this.matches.length == 0)) {
-                    this.inSearchMode = true;
-                    this.triggerSearch();
+					if ((!my_readonly) && (!my_disabled)) {
+                    	this.inSearchMode = true;
+                    	this.triggerSearch();
+					}
                 } else {
                     this.enterIdleState();
                 }
