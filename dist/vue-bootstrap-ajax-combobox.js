@@ -59,8 +59,8 @@ Vue.component(
                     placeholder_label:null,
                 },
 
-				my_readonly:false,
-				my_disabled:false,
+                my_readonly:false,
+                my_disabled:false,
 
                 // Placeholder id and alternate id, derived from id_type and alt_id_type.
                 placeholder_id:null,
@@ -129,37 +129,39 @@ Vue.component(
                         }
                     }
 
-                    // If allow_clear or placeholder_label changes, handle changes to the empty label.
-                    if ((changed.indexOf('allow_clear') >= 0) || (changed.indexOf('placeholder_label') >= 0)) {
+                    // If id_type, allow_clear or placeholder_label changes, handle changes to the empty label.
+                    if ((changed.indexOf('id_type') >= 0) ||
+                        (changed.indexOf('allow_clear') >= 0) ||
+                        (changed.indexOf('placeholder_label') >= 0)) {
                         if (this.isPlaceholderId(true)) {
                             this.enterIdleState();
-                            this.triggerLookupById();
+                            this.label = this.my_options.placeholder_label;
                         }
                     }
                 },
                 deep:true,
             },
 
-			readonly:function() {
-				this.updateMyReadonlyFromProp();
-				if (this.my_readonly) {
-					this.enterIdleState();
-				}
-			},
+            readonly:function() {
+                this.updateMyReadonlyFromProp();
+                if (this.my_readonly) {
+                    this.enterIdleState();
+                }
+            },
 
-			disabled:function() {
-				this.updateMyDisabledFromProp();
-				this.enterIdleState();
-				if (this.my_disabled) {
-					this.enterIdleState();
-				}
-			},
+            disabled:function() {
+                this.updateMyDisabledFromProp();
+                this.enterIdleState();
+                if (this.my_disabled) {
+                    this.enterIdleState();
+                }
+            },
         },
 
         created:function() {
             this.updateMyOptionsFromParentOptions();
-			this.updateMyReadonlyFromProp();
-			this.updateMyDisabledFromProp();
+            this.updateMyReadonlyFromProp();
+            this.updateMyDisabledFromProp();
             this.triggerLookupById();
         },
 
@@ -256,21 +258,21 @@ Vue.component(
             },
 
             clearButtonClicked:function() {
-				if ((!my_readonly) && (!my_disabled)) {
-                	this.setIdWithoutTriggeringLookupById(this.placeholder_id);
-                	this.label = this.my_options.placeholder_label;
-                	this.search = '';
-                	this.clearMatches();
-				}
+                if ((!this.my_readonly) && (!this.my_disabled)) {
+                    this.setIdWithoutTriggeringLookupById(this.placeholder_id);
+                    this.label = this.my_options.placeholder_label;
+                    this.search = '';
+                    this.clearMatches();
+                }
                 this.$refs.search.focus();
             },
 
             chevronDownClicked:function() {
                 if ((!this.inSearchMode) || (this.matches.length == 0)) {
-					if ((!my_readonly) && (!my_disabled)) {
-                    	this.inSearchMode = true;
-                    	this.triggerSearch();
-					}
+                    if ((!this.my_readonly) && (!this.my_disabled)) {
+                        this.inSearchMode = true;
+                        this.triggerSearch();
+                    }
                 } else {
                     this.enterIdleState();
                 }
@@ -336,7 +338,8 @@ Vue.component(
             },
 
             doLookupById:function() {
-                if (this.isPlaceholderId()) {
+                if (this.isPlaceholderId(true)) {
+                    this.enterIdleState();
                     this.label = this.my_options.placeholder_label;
                     return;
                 }
@@ -471,21 +474,21 @@ Vue.component(
                 return changed;
             },
 
-			updateMyReadonlyFromProp:function() {
-				this.my_readonly = this.calcReadonlyOrDisabledFromProp('readonly');
-			},
+            updateMyReadonlyFromProp:function() {
+                this.my_readonly = this.calcReadonlyOrDisabledFromProp('readonly');
+            },
 
-			updateMyDisabledFromProp:function() {
-				this.my_disabled = this.calcReadonlyOrDisabledFromProp('disabled');
-			},
+            updateMyDisabledFromProp:function() {
+                this.my_disabled = this.calcReadonlyOrDisabledFromProp('disabled');
+            },
 
-			calcReadonlyOrDisabledFromProp(propname) {
-				switch (typeof(this[propname])) {
-				case 'undefined': return false;
-				case 'boolean': return this[propname];
-				case 'string': return true;
-				}
-			},
+            calcReadonlyOrDisabledFromProp(propname) {
+                switch (typeof(this[propname])) {
+                case 'undefined': return false;
+                case 'boolean': return this[propname];
+                case 'string': return true;
+                }
+            },
 
             buildURL:function(args) {
                 var sep = (this.my_options.ajax_url.indexOf('?') >= 0) ? '&' : '?';
