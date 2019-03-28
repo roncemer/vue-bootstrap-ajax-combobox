@@ -392,7 +392,7 @@ Vue.component(
 
             isPlaceholderId:function(ignore_allow_clear) {
                 if (typeof(ignore_allow_clear) == 'undefined') ignore_allow_clear = false;
-                return (ignore_allow_clear || this.my_options.allow_clear) && (this.id == this.placeholder_id);
+                return (ignore_allow_clear || this.my_options.allow_clear) && ((this.id == this.placeholder_id) || (this.id === null));
             },
 
             clearMatches:function() {
