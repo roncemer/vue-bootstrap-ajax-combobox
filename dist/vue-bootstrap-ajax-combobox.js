@@ -42,7 +42,7 @@ Vue.component(
 ' <div v-if="my_options.debug" v-html="printAttrs()"></div>'+"\n"+
 ' <div class="ajax-combobox-dropdown dropdown" v-bind:class="(matches.length > 0) ? \'show\' : \'\'">'+"\n"+
 '  <div class="ajax-combobox-dropdown-menu dropdown-menu" v-bind:class="(matches.length > 0) ? \'show\' : \'\'">'+"\n"+
-'   <a v-for="(item, itemidx) in matches" class="ajax-combobox-dropdown-item dropdown-item" v-bind:class="(itemidx == activeMatchIdx) ? \'active\' : \'\'" tabindex="-1" href="#" v-on:click.stop.prevent="itemSelected(itemidx)">{{item.label}}</a>'+"\n"+
+'   <a v-for="(item, itemidx) in matches" class="ajax-combobox-dropdown-item dropdown-item" v-bind:class="(itemidx == activeMatchIdx) ? \'active bg-primary text-light\' : \'\'" tabindex="-1" href="#" v-on:click.stop.prevent="itemSelected(itemidx)">{{item.label}}</a>'+"\n"+
 '  </div> <!-- .dropdown-menu -->'+"\n"+
 ' </div> <!-- .dropdown -->'+"\n"+
 '</div> <!-- .ajax-combobox -->'+"\n",
@@ -92,6 +92,7 @@ Vue.component(
                 },
 
                 set:function(newValue) {
+                    this.value = newValue;
                     this.$emit('input', newValue);
                 },
             }
@@ -152,9 +153,6 @@ Vue.component(
             disabled:function() {
                 this.updateMyDisabledFromProp();
                 this.enterIdleState();
-                if (this.my_disabled) {
-                    this.enterIdleState();
-                }
             },
         },
 
@@ -173,7 +171,8 @@ Vue.component(
             searchBlurred:function(evt) {
                 // Don't do anything if we're losing focus to one of our own components.
                 if (evt && evt.relatedTarget &&
-                    ((evt.relatedTarget.classList.contains('ajax-combobox-clear-button')) ||
+                    ((evt.relatedTarget.classList.contains('ajax-combobox')) ||
+                     (evt.relatedTarget.classList.contains('ajax-combobox-clear-button')) ||
                      (evt.relatedTarget.classList.contains('ajax-combobox-toggle-button')) ||
                      (evt.relatedTarget.classList.contains('ajax-combobox-dropdown-item')))) {
                     return;
@@ -186,11 +185,10 @@ Vue.component(
                     this.clearTrigger();
                     this.doLookupByAltId();
                 } else {
-                    var thisvm = this;
                     setTimeout(
                         function() {
-                            thisvm.enterIdleState();
-                        },
+                            this.enterIdleState();
+                        }.bind(this),
                         300
                     );
                 }
@@ -267,11 +265,10 @@ Vue.component(
             triggerSearch:function() {
                 this.clearTrigger();
                 if (this.inSearchMode) {
-                    var thisvm = this;
                     this.ajaxTimeout = setTimeout(
                         function() {
-                            thisvm.doSearch();
-                        },
+                            this.doSearch();
+                        }.bind(this),
                         300
                     );
                 }
@@ -279,11 +276,10 @@ Vue.component(
 
             triggerLookupById:function() {
                 this.clearTrigger();
-                var thisvm = this;
                 this.ajaxTimeout = setTimeout(
                     function() {
-                        thisvm.doLookupById();
-                    },
+                        this.doLookupById();
+                    }.bind(this),
                     20
                 );
             },
@@ -308,16 +304,15 @@ Vue.component(
             doSearch:function() {
                 this.clearTrigger();
                 if (this.inSearchMode) {
-                    var thisvm = this;
                     $.ajax({
                         url:this.buildURL('q='+encodeURIComponent(this.search)),
                         success:function(resp) {
-                            thisvm.matches = resp.matches;
-                            thisvm.activeMatchIdx = -1;
-                        },
+                            this.matches = resp.matches;
+                            this.activeMatchIdx = -1;
+                        }.bind(this),
                         error:function(jqXHR, textStatus, errorThrown) {
                             console.error('HTTP request error; textStatus='+textStatus+'; errorThrown='+errorThrown);
-                        },
+                        }.bind(this),
                     });
                 }
             },
@@ -329,19 +324,18 @@ Vue.component(
                     return;
                 }
 
-                var thisvm = this;
                 $.ajax({
                     url:this.buildURL('id='+encodeURIComponent(this.id)),
                     success:function(resp) {
-                        if ((!thisvm.isPlaceholderId()) &&
-                            ((resp.id == thisvm.id) || (resp.id == thisvm.placeholder_id))) {
-                            thisvm.label = resp.label;
+                        if ((!this.isPlaceholderId()) &&
+                            ((resp.id == this.id) || (resp.id == this.placeholder_id))) {
+                            this.label = resp.label;
                         }
-                    },
+                    }.bind(this),
                     error:function(jqXHR, textStatus, errorThrown) {
-                        thisvm.label = '*** SERVER ERROR ***';
+                        this.label = '*** SERVER ERROR ***';
                         console.error('HTTP request error; textStatus='+textStatus+'; errorThrown='+errorThrown);
-                    },
+                    }.bind(this),
                 });
             },
 
@@ -352,19 +346,20 @@ Vue.component(
                 this.setIdWithoutTriggeringLookupById(this.placeholder_id);
                 this.label = this.my_options.placeholder_label;
 
-                var thisvm = this;
                 $.ajax({
                     url:this.buildURL('alt_id='+encodeURIComponent(search)),
                     success:function(resp) {
-                        thisvm.setIdWithoutTriggeringLookupById(thisvm.marshalId(resp.id));
-                        thisvm.label = resp.label;
-                        thisvm.clearTrigger();
-                        thisvm.inSearchMode = false;
-                    },
+                        if ((typeof(resp.id) != 'undefined') && (typeof(resp.label) != 'undefined')) {
+                            this.setIdWithoutTriggeringLookupById(this.marshalId(resp.id));
+                            this.label = resp.label;
+                            this.clearTrigger();
+                            this.inSearchMode = false;
+                        }
+                    }.bind(this),
                     error:function(jqXHR, textStatus, errorThrown) {
-                        thisvm.label = '*** SERVER ERROR ***';
+                        this.label = '*** SERVER ERROR ***';
                         console.error('HTTP request error; textStatus='+textStatus+'; errorThrown='+errorThrown);
-                    },
+                    }.bind(this),
                 });
             },
 
@@ -373,6 +368,9 @@ Vue.component(
                 this.search = '';
                 this.clearMatches();
                 this.clearTrigger();
+                if (this.isPlaceholderId(true)) {
+                    this.label = this.my_options.placeholder_label;
+                }
             },
 
             isPlaceholderId:function(ignore_allow_clear) {
