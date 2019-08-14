@@ -35,7 +35,7 @@ Vue.component(
         template:
 '<div class="ajax-combobox" style="padding:0; border:none;">'+"\n"+
 ' <div class="input-group" style="margin:0; padding:0;">'+"\n"+
-'  <input type="text" ref="search" class="ajax-combobox-search-input form-control" v-bind:readonly="my_readonly || (!inSearchMode)" v-bind:disabled="my_disabled" v-on:focus="searchFocused" v-on:blur="searchBlurred" autocomplete="off" autocorrect="off" autocapitalize="none" v-on:keydown="searchKeyDown" v-on:keypress="searchKeyPress" v-model.trim="search_computed" style="margin:0; padding:0;"/>'+"\n"+
+'  <input type="text" ref="search" class="ajax-combobox-search-input form-control" v-bind:placeholder="label" v-bind:readonly="my_readonly" v-bind:disabled="my_disabled" v-on:focus="searchFocused" v-on:blur="searchBlurred" autocomplete="off" autocorrect="off" autocapitalize="none" v-on:keydown="searchKeyDown" v-model.trim="search_computed" style="margin:0; padding:0;"/>'+"\n"+
 '  <div v-if="my_options.allow_clear && (!my_readonly) && (!my_disabled) && (!isPlaceholderId())" class="ajax-combobox-clear-button-container input-group-append"><button class="ajax-combobox-clear-button btn btn-default" tabindex="-1" v-on:click.stop.prevent="clearButtonClicked()"><i class="fa fa-times-circle-o"></i></button></div>'+"\n"+
 '  <div class="input-group-append ajax-combobox-toggle-button-container"><button class="ajax-combobox-toggle-button btn btn-default" tabindex="-1" v-bind:disabled="my_readonly || my_disabled" v-on:click.stop.prevent="chevronDownClicked()"><i class="fa fa-chevron-down"></i></button></div>'+"\n"+
 ' </div> <!-- .input-group -->'+"\n"+
@@ -167,6 +167,7 @@ Vue.component(
 
         methods:{
             searchFocused:function(evt) {
+                this.inSearchMode = true;
             },
 
             searchBlurred:function(evt) {
@@ -238,22 +239,6 @@ Vue.component(
                         this.enterIdleState();
                         break;
                     }
-                }
-            },
-
-            searchKeyPress:function(evt) {
-                if (this.my_readonly || this.my_disabled) return;
-
-                if ((!this.inSearchMode) && (evt.charCode >= 0x20) && (!evt.shiftKey) && (!evt.ctrlKey) && (!evt.altKey) && (!evt.metaKey)) {
-                    evt.stopPropagation();
-                    this.inSearchMode = true;
-                    var thisvm = this;
-                    setTimeout(
-                        function() {
-                            thisvm.search = String.fromCharCode(evt.charCode);
-                        },
-                        1
-                    );
                 }
             },
 
