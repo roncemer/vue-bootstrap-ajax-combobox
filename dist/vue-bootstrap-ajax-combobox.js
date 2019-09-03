@@ -465,7 +465,7 @@ Vue.component(
                 this.my_disabled = this.calcReadonlyOrDisabledFromProp('disabled');
             },
 
-            calcReadonlyOrDisabledFromProp(propname) {
+            calcReadonlyOrDisabledFromProp:function(propname) {
                 switch (typeof(this[propname])) {
                 case 'undefined': return false;
                 case 'boolean': return this[propname];
