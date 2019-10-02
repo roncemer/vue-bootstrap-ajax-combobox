@@ -229,12 +229,18 @@ Vue.component(
                                 this.clearTrigger();
                                 this.doLookupByAltId();
                             }
+                            this.inSearchMode = true;
                         }
                         break;
                     case 'Escape':
                         evt.preventDefault();
                         evt.stopPropagation();
-                        this.enterIdleState();
+                        if (this.inSearchMode) {
+                            this.enterIdleState();
+                            this.inSearchMode = true;
+                        } else {
+                            this.enterIdleState();
+                        }
                         break;
                     }
                 }
