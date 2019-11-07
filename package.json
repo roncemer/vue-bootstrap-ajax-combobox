@@ -1,6 +1,6 @@
 {
   "name": "vue-bootstrap-ajax-combobox",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "AJAX Combobox autocomplete component for Vue.js 2.0.0+, Axios 0.18.0+, Font Awesome 4.7.0+, and Bootstrap 4.",
   "keywords": [
     "AJAX",
@@ -15,12 +15,6 @@
   },
   "author": "Ron Cemer",
   "license": "MIT",
-  "dependencies": {
-    "vue": ">=2.0.0",
-    "axios": ">=0.18.0",
-    "font-awesome": ">=4.7.0",
-    "bootstrap": ">=4.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://roncemer@github.com/roncemer/vue-bootstrap-ajax-combobox.git"
