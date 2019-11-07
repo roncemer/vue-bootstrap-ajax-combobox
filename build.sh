@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # yarn install
-# yarn global add rimfaf
-# yarn global add webpack
-# yarn global add webpack-cli
+# yarn global add rimraf webpack webpack-cli
 
 npm run build
 
