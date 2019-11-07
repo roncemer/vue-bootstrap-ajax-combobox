@@ -6,7 +6,7 @@ This component is designed and optimized around searching database tables and en
 Requirements:
 * Vue.js 2.x
 * Bootstrap 4.x
-* JQuery 3.x
+* Axios 0.19.0 or later
 * Font Awesome 4.x
 
 License: MIT
