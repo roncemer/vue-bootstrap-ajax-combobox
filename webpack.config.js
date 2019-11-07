@@ -25,7 +25,6 @@ var config = {
     ]
   },
   externals: {
-    moment: 'moment'
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
