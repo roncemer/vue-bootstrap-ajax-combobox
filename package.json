@@ -1,18 +1,41 @@
 {
   "name": "vue-bootstrap-ajax-combobox",
-  "version": "1.0.24",
-  "description": "AJAX Combobox autocomplete component for Vue.js 2.0.0+, Axios 0.18.0+, Font Awesome 4.7.0+, and Bootstrap 4.",
-  "main": "vue-bootstrap-ajax-combobox.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "AJAX",
-    "Autocomplete",
-    "Vue.js",
-    "Axios",
-    "Bootstrap"
+  "version": "1.0.26",
+  "description": "AJAX Combobox autocomplete component for Vue.js >=2.5.16, Axios >=0.18.0, Font Awesome >=4.7.0, and Bootstrap >=4.3.1",
+
+  "main": "dist/ajax-combobox.ssr.js",
+  "module": "dist/ajax-combobox.esm.js",
+  "unpkg": "dist/ajax-combobox.min.js",
+
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
   ],
-  "author": "Ron Cemer",
-  "license": "MIT"
+
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+  },
+
+  "dependencies": {
+    "vue": ">=2.5.16",
+    "axios": ">=0.18.0",
+    "font-awesome": ">=4.7.0",
+    "bootstrap": ">=4.3.1"
+  },
+
+  "devDependencies": {
+    "cross-env": "^6.0.3",
+    "minimist": "^1.2.0",
+    "rollup": "^1.26.1",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-vue": "5.1.1",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  }
 }
