@@ -1,6 +1,6 @@
 {
   "name": "vue-bootstrap-ajax-combobox",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "AJAX Combobox autocomplete component for Vue.js 2.0.0+, Axios 0.18.0+, Font Awesome 4.7.0+, and Bootstrap 4.",
   "keywords": [
     "AJAX",
