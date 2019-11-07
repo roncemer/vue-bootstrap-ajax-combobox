@@ -50,7 +50,7 @@ module.exports = [
     }
   }),
   merge(config, {
-    entry: path.resolve(__dirname + '/src/AjaxCombobox.js'),
+    entry: path.resolve(__dirname + '/src/AjaxCombobox.vue'),
     output: {
       filename: 'vue-bootstrap-ajax-combobox.js',
       libraryTarget: 'umd',
