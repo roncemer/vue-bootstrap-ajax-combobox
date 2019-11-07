@@ -1,8 +1,15 @@
 {
   "name": "vue-bootstrap-ajax-combobox",
-  "version": "1.0.11",
-  "description": "AJAX Combobox autocomplete component for Vue.js 2.x and Bootstrap 4.",
-  "main": "vue-bootstrap-ajax-combobox.js",
+  "version": "1.0.12",
+  "description": "AJAX Combobox autocomplete component for Vue.js 2.x, Axios 0.19.0 or later, and Bootstrap 4.",
+  "main": "dist/vue-bootstrap-ajax-combobox.js",
+
+  "main": "dist/vue-bootstrap-ajax-combobox.umd.js",
+  "module": "dist/vue-bootstrap-ajax-combobox.esm.js",
+  "unpkg": "dist/vue-bootstrap-ajax-combobox.js",
+  "browser": {
+    "./sfc": "src/vue-bootstrap-ajax-combobox.vue"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +17,18 @@
     "AJAX",
     "Autocomplete",
     "Vue.js",
+    "Axios",
     "Bootstrap"
   ],
   "author": "Ron Cemer",
-  "license": "MIT"
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://roncemer@github.com/roncemer/vue-bootstrap-ajax-combobox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/roncemer/vue-bootstrap-ajax-combobox/issues"
+  },
+  "homepage": "https://github.com/roncemer/vue-bootstrap-ajax-combobox#readme"
 }
