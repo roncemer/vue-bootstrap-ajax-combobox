@@ -1,59 +1,75 @@
-# Install vue-sfc-rollup CLI plugin.
-# NOTE: This only needs to be done once per dev machine.
-
-# Install the vue-sfc-rollup CLI plugin.
-sudo npm install -g vue-sfc-rollup
+The information in this file comes from here: https://www.npmjs.com/package/vue-sfc-rollup
+Which is referenced at the bottom of is page: https://vuejs.org/v2/cookbook/packaging-sfc-for-npm.html
 
 
-# ================================================================
-# This section discusses configuring the build process.
-# NOTE: This only needs to be done once per single-file component.
-# ================================================================
+Install the vue-sfc-rollup CLI plugin.
+NOTE: This only needs to be done once per dev machine.
 
-# Initialize the project.
-# The project name is vue-bootstrap-ajax-combobox.
-# The kebab-case component name is ajax-combobox.
-# Take the default for the location to save the files.
-sfc-init
+    sudo npm install -g vue-sfc-rollup
 
-# Edit package.json, updating the version and description values.
 
-# Move the files and directories into place.
-mv ../ajax-combobox/* .
-rmdir ../ajax-combobox
+================================================================
+This section discusses configuring the build process.
+NOTE: This only needs to be done once per single-file component.
+================================================================
 
-# Add the following dependencies to package.json, under the "dependencies" section:
+Initialize the project.
+The project name is vue-bootstrap-ajax-combobox.
+The kebab-case component name is ajax-combobox.
+Take the default for the location to save the files (../ajax-combobox).
+
+    sfc-init
+
+Edit package.json, updating the version and description values.
+
+Move the files and directories into place.
+
+    mv ../ajax-combobox/* .
+    rmdir ../ajax-combobox
+
+Add the following dependencies to package.json, under the "dependencies" section:
+
     "vue": ">=2.5.16",
     "axios": ">=0.18.0",
     "font-awesome": ">=4.7.0",
     "bootstrap": ">=4.3.1"
-# Add the following to build/rollup.config.js, in the "const external" array:
+
+Add the following to build/rollup.config.js, in the "const external" array:
+
   "axios"
-# Add the following to build/rollup.config.js, in the "const globals" array:
+
+Add the following to build/rollup.config.js, in the "const globals" array:
+
   "axios": "axios"
-# Install the dependencies.
-yarn install
 
-# ======================================================================
-# This section discusses building, serving, tagging, committing, pushing
-# and publishing the component.
-# ======================================================================
+Install the dependencies.
 
-# Serve the component.  Note: this will serve a broken component because the
-# CSS and fonts aren't loaded, no props are set by the wrapper, and there is
-# no server-side API being served.
-vue serve --open ./src/ajax-combobox.vue
+    yarn install
 
-# Build the component.
-npm run build
+======================================================================
+This section discusses building, serving, tagging, committing, pushing
+and publishing the component.
+======================================================================
 
-# Buid, tag, commit, push and publish a new version of the component.
-# After updating the version in package.json and building, do the following steps.
+Serve the component.  Note: this will serve a broken component because the
+CSS and fonts aren't loaded, no props are set by the wrapper, and there is
+no server-side API being served.
 
-# Apply git tag, using the version from package.json; commit and push the code.
-git tag <version-from-package.json>
-git commit -a
-git push
+    vue serve --open ./src/ajax-combobox.vue
 
-# Publish to npmjs.com.
-npm publish
+Build the component.
+
+    npm run build
+
+Buid, tag, commit, push and publish a new version of the component.
+After updating the version in package.json and building, do the following steps.
+
+Apply git tag, using the version from package.json; commit and push the code.
+
+    git tag <version-from-package.json>
+    git commit -a
+    git push
+
+Publish the current version to npmjs.com.
+
+    npm publish
