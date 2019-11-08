@@ -31,7 +31,8 @@ var script = {
       inSearchMode: false,
       matches: [],
       activeMatchIdx: -1,
-      ajaxTimeout: null
+      ajaxTimeout: null,
+      ajaxTimeoutTarget: ''
     };
   },
 
@@ -66,6 +67,7 @@ var script = {
 
     value: function value() {
       this.localValue = this.value;
+      this.triggerLookupById();
     },
 
     localValue: function localValue() {
@@ -255,8 +257,10 @@ var script = {
     triggerSearch: function triggerSearch() {
       this.clearTrigger();
       if (this.inSearchMode) {
+        this.ajaxTimeoutTarget = 'doSearch';
         this.ajaxTimeout = setTimeout(
           function() {
+            this.clearTrigger();
             this.doSearch();
           }.bind(this),
           300
@@ -266,8 +270,10 @@ var script = {
 
     triggerLookupById: function triggerLookupById() {
       this.clearTrigger();
+      this.ajaxTimeoutTarget = 'doLookupById';
       this.ajaxTimeout = setTimeout(
         function() {
+          this.clearTrigger();
           this.doLookupById();
         }.bind(this),
         20
@@ -275,6 +281,7 @@ var script = {
     },
 
     clearTrigger: function clearTrigger() {
+      this.ajaxTimeoutTarget = '';
       if (this.ajaxTimeout !== null) {
         clearTimeout(this.ajaxTimeout);
         this.ajaxTimeout = null;
@@ -371,7 +378,9 @@ var script = {
       this.inSearchMode = false;
       this.search = "";
       this.clearMatches();
-      this.clearTrigger();
+      if (this.ajaxTimeoutTarget != 'doLookupById') {
+        this.clearTrigger();
+      }
       if (this.isPlaceholderId(true)) {
         this.label = this.my_options.placeholder_label;
       }
@@ -630,7 +639,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-619522db";
+  var __vue_module_identifier__ = "data-v-b068bf28";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* style inject */

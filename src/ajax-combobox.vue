@@ -138,7 +138,8 @@ export default {
       inSearchMode: false,
       matches: [],
       activeMatchIdx: -1,
-      ajaxTimeout: null
+      ajaxTimeout: null,
+      ajaxTimeoutTarget: ''
     };
   },
 
@@ -173,6 +174,7 @@ export default {
 
     value() {
       this.localValue = this.value;
+      this.triggerLookupById();
     },
 
     localValue() {
@@ -362,8 +364,10 @@ export default {
     triggerSearch() {
       this.clearTrigger();
       if (this.inSearchMode) {
+        this.ajaxTimeoutTarget = 'doSearch';
         this.ajaxTimeout = setTimeout(
           function() {
+            this.clearTrigger();
             this.doSearch();
           }.bind(this),
           300
@@ -373,8 +377,10 @@ export default {
 
     triggerLookupById() {
       this.clearTrigger();
+      this.ajaxTimeoutTarget = 'doLookupById';
       this.ajaxTimeout = setTimeout(
         function() {
+          this.clearTrigger();
           this.doLookupById();
         }.bind(this),
         20
@@ -382,6 +388,7 @@ export default {
     },
 
     clearTrigger() {
+      this.ajaxTimeoutTarget = '';
       if (this.ajaxTimeout !== null) {
         clearTimeout(this.ajaxTimeout);
         this.ajaxTimeout = null;
@@ -478,7 +485,9 @@ export default {
       this.inSearchMode = false;
       this.search = "";
       this.clearMatches();
-      this.clearTrigger();
+      if (this.ajaxTimeoutTarget != 'doLookupById') {
+        this.clearTrigger();
+      }
       if (this.isPlaceholderId(true)) {
         this.label = this.my_options.placeholder_label;
       }
