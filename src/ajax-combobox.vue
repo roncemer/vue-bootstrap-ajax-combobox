@@ -471,7 +471,7 @@ export default {
           this.setIdWithoutTriggeringLookupById(this.marshalId(response.data.id));
           this.label = response.data.label;
           this.clearTrigger();
-          this.inSearchMode = false;
+          this.inSearchMode = (this.$refs.search === document.activeElement);
         }
       }.bind(this))
       .catch(function(error) {

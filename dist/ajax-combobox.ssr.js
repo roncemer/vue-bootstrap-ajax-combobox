@@ -365,7 +365,7 @@ var script = {
           this.setIdWithoutTriggeringLookupById(this.marshalId(response.data.id));
           this.label = response.data.label;
           this.clearTrigger();
-          this.inSearchMode = false;
+          this.inSearchMode = (this.$refs.search === document.activeElement);
         }
       }.bind(this))
       .catch(function(error) {
@@ -639,7 +639,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-d907650a";
+  var __vue_module_identifier__ = "data-v-876168ae";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* style inject */
