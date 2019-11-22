@@ -1,9 +1,8 @@
 <template>
   <!--
-VueCliBootstrapAjaxCombobox.vue
+ajax-combobox.vue
 
-AJAX Combobox autocomplete component for Vue.js 2.x CLI and Bootstrap 4.
-
+AJAX Combobox autocomplete component for Vue.js >=2.5.16, Axios >=0.18.0, Font Awesome >=4.7.0, and Bootstrap >=4.3.1.
 
 MIT License
 
@@ -108,7 +107,7 @@ SOFTWARE.
 import axios from "axios";
 
 export default {
-  name: "AjaxCombobox",
+  name: "AjaxComboboxTest",
   props: ["value", "options", "readonly", "disabled"],
 
   data() {
@@ -482,7 +481,7 @@ export default {
     },
 
     enterIdleState() {
-      this.inSearchMode = false;
+      this.inSearchMode = (this.$refs.search === document.activeElement);
       this.search = "";
       this.clearMatches();
       if (this.ajaxTimeoutTarget != 'doLookupById') {

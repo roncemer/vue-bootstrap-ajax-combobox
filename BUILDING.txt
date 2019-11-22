@@ -57,6 +57,10 @@ no server-side API being served.
 
     vue serve --open ./src/ajax-combobox.vue
 
+Confirm that everything is working.
+
+Update the version number in package.json.
+
 Build the component.
 
     npm run build

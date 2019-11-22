@@ -1,7 +1,7 @@
 'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var axios=_interopDefault(require('axios'));//
 
 var script = {
-  name: "AjaxCombobox",
+  name: "AjaxComboboxTest",
   props: ["value", "options", "readonly", "disabled"],
 
   data: function data() {
@@ -375,7 +375,7 @@ var script = {
     },
 
     enterIdleState: function enterIdleState() {
-      this.inSearchMode = false;
+      this.inSearchMode = (this.$refs.search === document.activeElement);
       this.search = "";
       this.clearMatches();
       if (this.ajaxTimeoutTarget != 'doLookupById') {
@@ -639,7 +639,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-b068bf28";
+  var __vue_module_identifier__ = "data-v-d907650a";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* style inject */
