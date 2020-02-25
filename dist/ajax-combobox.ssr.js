@@ -405,6 +405,7 @@ var script = {
       if (this.id !== new_id) {
         this.skipLookupByIdFromValueChange = true;
         this.id = new_id;
+        this.$emit("select", this.id);
       }
     },
 
@@ -639,7 +640,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-876168ae";
+  var __vue_module_identifier__ = "data-v-e08cd602";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* style inject */

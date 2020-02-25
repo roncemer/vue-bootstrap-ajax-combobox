@@ -43,6 +43,10 @@ The ```<ajax-combobox>``` element must be inside a Vue.js application or compone
 * **allow_clear**: A boolean, true to allow the id value to be cleared (to zero if id_type='number', or to an empty string if id_type='string'); false to always require an Id value and generate an error message if it happens to be zero or empty.  Optional.  Defaults to false.
 * **placeholder_label**: A placeholder label to show in the input when the value has been cleared.  Only used if allow_clear=true.
 
+# Events
+
+When the user clicks the optional "X" to clear the selection, selects an item from the list of matches, or enters an id or alt id directdly, a "select" event is emitted with the new identifier value.
+
 # Backend REST API
 
 The **ajax_url** option points to a backend REST API which you would implement.  It can be called two or three ways, depending on whether you're using **alt_id_type**.  For each call to the backend REST API, one of three query string parameters will be passed:

@@ -511,6 +511,7 @@ export default {
       if (this.id !== new_id) {
         this.skipLookupByIdFromValueChange = true;
         this.id = new_id;
+        this.$emit("select", this.id);
       }
     },
 
